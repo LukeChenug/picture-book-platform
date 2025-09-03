@@ -1,6 +1,12 @@
-# 绘本编辑阅读平台
+# 📚 绘本智能体平台
 
-一个功能强大的绘本制作和阅读平台，支持图片、音频、角色对话的完整绘本创作。
+一个功能强大的Web绘本生成和阅读平台，支持在线生成交互式绘本和预置绘本阅读。
+
+## 🌐 在线访问
+
+**GitHub Pages**: [https://YOUR_USERNAME.github.io/picture-book-platform](https://YOUR_USERNAME.github.io/picture-book-platform)
+
+> 请将 `YOUR_USERNAME` 替换为您的GitHub用户名
 
 ## 🚀 功能特色
 
