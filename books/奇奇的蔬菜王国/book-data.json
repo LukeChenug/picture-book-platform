@@ -1,0 +1,178 @@
+{
+  "id": "book_1758274632513_x0jtbru8e",
+  "title": "奇奇的蔬菜王国",
+  "description": "一个关于小朋友吃饭的绘本故事。",
+  "author": "绘本智能体",
+  "createdAt": "2025-09-19T09:39:32.969Z",
+  "pages": [
+    {
+      "id": 1,
+      "image": "./images/page1.jpg",
+      "narrator": "./audio/p1.mp3",
+      "characters": [],
+      "text": "页面 0 - page0",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 2,
+      "image": "./images/page2.jpg",
+      "narrator": "./audio/p2.mp3",
+      "characters": [],
+      "text": "页面 1 - page1",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 3,
+      "image": "./images/page3.jpg",
+      "narrator": "./audio/p3.mp3",
+      "characters": [],
+      "text": "页面 2 - page2",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 4,
+      "image": "./images/page4.jpg",
+      "narrator": "./audio/p4.mp3",
+      "characters": [],
+      "text": "页面 3 - page3",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 5,
+      "image": "./images/page5.jpg",
+      "narrator": "./audio/p5.mp3",
+      "characters": [],
+      "text": "页面 4 - page4",
+      "pageType": "public",
+      "options": [
+        {
+          "text": "是梦到拥有超人力量的蔬菜朋友们吗",
+          "targetPage": 6
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "image": "./images/page6.jpg",
+      "narrator": "./audio/p6.mp3",
+      "characters": [],
+      "text": "页面 5 - page5",
+      "pageType": "interactive",
+      "options": []
+    },
+    {
+      "id": 7,
+      "image": "./images/page7.jpg",
+      "narrator": "./audio/p7.mp3",
+      "characters": [],
+      "text": "页面 6 - page6",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 8,
+      "image": "./images/page8.jpg",
+      "narrator": "./audio/p8.mp3",
+      "characters": [],
+      "text": "页面 7 - page7",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 9,
+      "image": "./images/page9.jpg",
+      "narrator": "./audio/p9.mp3",
+      "characters": [],
+      "text": "页面 8 - page8",
+      "pageType": "public",
+      "options": [
+        {
+          "text": "A： 好呀，谢谢你！",
+          "targetPage": 10
+        },
+        {
+          "text": "B： 我才不要呢！",
+          "targetPage": 11
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "image": "./images/page10.jpg",
+      "narrator": "./audio/p10.mp3",
+      "characters": [],
+      "text": "页面 9 - page9",
+      "pageType": "interactive",
+      "options": []
+    },
+    {
+      "id": 11,
+      "image": "./images/page11.jpg",
+      "narrator": "./audio/p11.mp3",
+      "characters": [],
+      "text": "页面 10 - page10",
+      "pageType": "interactive",
+      "options": []
+    },
+    {
+      "id": 12,
+      "image": "./images/page12.jpg",
+      "narrator": "./audio/p12.mp3",
+      "characters": [],
+      "text": "页面 11 - page11",
+      "pageType": "public",
+      "options": []
+    },
+    {
+      "id": 13,
+      "image": "./images/page13.jpg",
+      "narrator": "./audio/p13.mp3",
+      "characters": [],
+      "text": "页面 12 - page12",
+      "pageType": "public",
+      "options": [
+        {
+          "text": "A： 太棒了，我要变强壮！",
+          "targetPage": 14
+        },
+        {
+          "text": "B： 我还是想靠自己。",
+          "targetPage": 15
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "image": "./images/page14.jpg",
+      "narrator": "./audio/p14.mp3",
+      "characters": [],
+      "text": "页面 13 - page13",
+      "pageType": "interactive",
+      "options": []
+    },
+    {
+      "id": 15,
+      "image": "./images/page15.jpg",
+      "narrator": "./audio/p15.mp3",
+      "characters": [],
+      "text": "页面 14 - page14",
+      "pageType": "interactive",
+      "options": []
+    },
+    {
+      "id": 16,
+      "image": "./images/page16.jpg",
+      "narrator": "./audio/p16.mp3",
+      "characters": [],
+      "text": "页面 15 - page15",
+      "pageType": "public",
+      "options": []
+    }
+  ]
+}
+
+
