@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>绘本世界 - 创作与阅读平台</title>
-    <meta name="version" content="v1.2.0">
+    <meta name="version" content="v1.3.0">
     <meta name="release-date" content="2025-10-27">
     <meta name="description" content="功能强大的Web绘本生成和阅读平台，支持在线生成交互式绘本和预置绘本阅读">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -6257,6 +6257,16 @@ let loraToolData = {
     }
 };
 
+// 批量编辑数据
+let batchEditData = {
+    files: [], // {name: string, content: string, newContent: string}
+    addText: '',
+    position: 'prefix', // 'prefix' or 'suffix'
+    separator: ', '
+};
+
+let currentLoraMode = 'split'; // 'split' or 'batchEdit'
+
 // 打开LORA标注工具
 function openLoraAnnotationTool() {
     const modal = document.createElement('div');
@@ -6269,6 +6279,21 @@ function openLoraAnnotationTool() {
                 <button onclick="closeLoraToolModal()">×</button>
             </div>
             <div class="modal-body">
+                <!-- 功能选择 -->
+                <div class="lora-tool-section" style="margin-bottom: 25px;">
+                    <h4><i class="fas fa-magic"></i> 选择功能</h4>
+                    <div style="display: flex; gap: 15px;">
+                        <button class="lora-btn-primary" id="splitModeBtn" onclick="switchLoraMode('split')" style="flex: 1;">
+                            <i class="fas fa-cut"></i> 文本拆分
+                        </button>
+                        <button class="lora-btn-secondary" id="batchEditModeBtn" onclick="switchLoraMode('batchEdit')" style="flex: 1; background: #28a745;">
+                            <i class="fas fa-edit"></i> 批量编辑
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 文本拆分模式 -->
+                <div id="splitModeContent" style="display: block;">
                 <!-- 文件上传区域 -->
                 <div class="lora-tool-section">
                     <h4><i class="fas fa-upload"></i> 上传标注文件</h4>
@@ -6353,6 +6378,80 @@ function openLoraAnnotationTool() {
                         <i class="fas fa-arrow-up"></i> 滚动查看所有文件
                     </div>
                 </div>
+                </div>
+
+                <!-- 批量编辑模式 -->
+                <div id="batchEditModeContent" style="display: none;">
+                    <!-- 文件上传区域 -->
+                    <div class="lora-tool-section">
+                        <h4><i class="fas fa-upload"></i> 上传多个TXT文件</h4>
+                        <label class="lora-file-upload" for="batchEditFileInput">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #6c757d; margin-bottom: 10px;"></i>
+                            <p style="margin: 0; color: #6c757d;">点击选择多个TXT文件（按住Ctrl/Cmd多选）</p>
+                            <p style="margin: 5px 0 0 0; font-size: 12px; color: #999;">支持批量上传，一次性编辑所有文件</p>
+                            <input type="file" id="batchEditFileInput" accept=".txt" multiple onchange="handleBatchEditFileUpload(event)">
+                        </label>
+                        <div id="batchEditFileInfo" style="display: none;"></div>
+                    </div>
+
+                    <!-- 编辑设置 -->
+                    <div class="lora-tool-section">
+                        <h4><i class="fas fa-pen"></i> 编辑设置</h4>
+                        
+                        <div class="lora-input-group">
+                            <label>添加的词组（触发词）</label>
+                            <input type="text" id="batchEditText" placeholder="如: masterpiece, best quality" oninput="updateBatchEditPreview()">
+                            <small style="color: #999; display: block; margin-top: 5px;">输入要添加到每个文件的词组</small>
+                        </div>
+
+                        <div class="lora-input-group">
+                            <label>添加位置</label>
+                            <div class="lora-radio-group">
+                                <label class="lora-radio-option">
+                                    <input type="radio" name="batchEditPosition" value="prefix" checked onchange="updateBatchEditPreview()">
+                                    <span><strong>开头</strong>（在原内容前添加）</span>
+                                </label>
+                                <label class="lora-radio-option">
+                                    <input type="radio" name="batchEditPosition" value="suffix" onchange="updateBatchEditPreview()">
+                                    <span><strong>结尾</strong>（在原内容后添加）</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="lora-input-group">
+                            <label>连接方式</label>
+                            <select id="batchEditSeparator" onchange="updateBatchEditPreview()" style="width: 100%; padding: 10px; border: 2px solid #dee2e6; border-radius: 6px;">
+                                <option value=", ">逗号+空格 (, )</option>
+                                <option value=" ">空格 ( )</option>
+                                <option value=", \n">逗号+换行 (, \\n)</option>
+                                <option value="\n">换行 (\\n)</option>
+                                <option value="">无分隔符（直接连接）</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 预览结果 -->
+                    <div class="lora-tool-section" id="batchEditPreviewSection" style="display: none;">
+                        <h4><i class="fas fa-eye"></i> 预览结果</h4>
+                        <div class="lora-stats">
+                            <div class="lora-stat-item">
+                                <span class="lora-stat-number" id="batchEditFileCount">0</span>
+                                <span class="lora-stat-label">文件数量</span>
+                            </div>
+                            <div class="lora-stat-item">
+                                <span class="lora-stat-number" id="batchEditAddedChars">0</span>
+                                <span class="lora-stat-label">新增字符</span>
+                            </div>
+                        </div>
+                        <div class="lora-preview-box" id="batchEditPreviewList">
+                            <!-- 预览列表将在这里生成 -->
+                        </div>
+                        <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #999;">
+                            <i class="fas fa-arrow-up"></i> 滚动查看所有文件
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button class="lora-btn-primary" id="loraSaveToFolderBtn" onclick="saveLoraFilesToFolder()" disabled style="flex: 1;">
@@ -6714,6 +6813,288 @@ async function downloadLoraFiles() {
         
         hideLoadingMessage();
         showSuccessMessage(`✅ 成功导出 ${segments.length} 个文件！`);
+        
+    } catch (error) {
+        console.error('导出失败:', error);
+        hideLoadingMessage();
+        showErrorMessage('导出失败：' + error.message);
+    }
+}
+
+// =============== 批量编辑功能 ================
+
+// 切换LORA工具模式
+function switchLoraMode(mode) {
+    currentLoraMode = mode;
+    
+    // 更新按钮样式
+    const splitBtn = document.getElementById('splitModeBtn');
+    const batchEditBtn = document.getElementById('batchEditModeBtn');
+    
+    if (mode === 'split') {
+        splitBtn.className = 'lora-btn-primary';
+        batchEditBtn.className = 'lora-btn-secondary';
+        batchEditBtn.style.background = '#28a745';
+        document.getElementById('splitModeContent').style.display = 'block';
+        document.getElementById('batchEditModeContent').style.display = 'none';
+        
+        // 显示/隐藏对应的按钮
+        document.getElementById('loraSaveToFolderBtn').style.display = 'block';
+        document.getElementById('loraDownloadBtn').style.display = 'block';
+        if (document.getElementById('batchEditSaveBtn')) {
+            document.getElementById('batchEditSaveBtn').style.display = 'none';
+        }
+        if (document.getElementById('batchEditDownloadBtn')) {
+            document.getElementById('batchEditDownloadBtn').style.display = 'none';
+        }
+    } else {
+        splitBtn.className = 'lora-btn-secondary';
+        batchEditBtn.className = 'lora-btn-primary';
+        batchEditBtn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+        document.getElementById('splitModeContent').style.display = 'none';
+        document.getElementById('batchEditModeContent').style.display = 'block';
+        
+        // 显示/隐藏对应的按钮
+        document.getElementById('loraSaveToFolderBtn').style.display = 'none';
+        document.getElementById('loraDownloadBtn').style.display = 'none';
+        
+        // 添加批量编辑按钮（如果还没有）
+        const footer = document.querySelector('#loraToolModal .modal-footer');
+        if (!document.getElementById('batchEditSaveBtn')) {
+            const saveBtn = document.createElement('button');
+            saveBtn.id = 'batchEditSaveBtn';
+            saveBtn.className = 'lora-btn-primary';
+            saveBtn.style.flex = '1';
+            saveBtn.disabled = true;
+            saveBtn.onclick = saveBatchEditFiles;
+            saveBtn.innerHTML = '<i class="fas fa-folder-open"></i> 选择文件夹并保存';
+            footer.insertBefore(saveBtn, footer.firstChild);
+        }
+        if (!document.getElementById('batchEditDownloadBtn')) {
+            const downloadBtn = document.createElement('button');
+            downloadBtn.id = 'batchEditDownloadBtn';
+            downloadBtn.className = 'lora-btn-primary';
+            downloadBtn.style.flex = '1';
+            downloadBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            downloadBtn.disabled = true;
+            downloadBtn.onclick = downloadBatchEditFiles;
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> 下载ZIP压缩包';
+            footer.insertBefore(downloadBtn, document.getElementById('batchEditSaveBtn').nextSibling);
+        }
+        document.getElementById('batchEditSaveBtn').style.display = 'block';
+        document.getElementById('batchEditDownloadBtn').style.display = 'block';
+    }
+}
+
+// 处理批量编辑文件上传
+function handleBatchEditFileUpload(event) {
+    const files = Array.from(event.target.files);
+    
+    if (files.length === 0) return;
+    
+    // 验证所有文件都是txt
+    const invalidFiles = files.filter(f => !f.name.toLowerCase().endsWith('.txt'));
+    if (invalidFiles.length > 0) {
+        alert(`⚠️ 只支持TXT文件！发现 ${invalidFiles.length} 个非TXT文件。`);
+        event.target.value = '';
+        return;
+    }
+    
+    // 显示文件信息
+    const fileInfo = document.getElementById('batchEditFileInfo');
+    fileInfo.style.display = 'block';
+    fileInfo.innerHTML = `
+        <div class="lora-file-info">
+            <i class="fas fa-file-alt"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: bold;">已选择 ${files.length} 个文件</div>
+                <div style="font-size: 12px; color: #666;">总大小: ${formatFileSize(files.reduce((sum, f) => sum + f.size, 0))}</div>
+            </div>
+            <i class="fas fa-check-circle"></i>
+        </div>
+    `;
+    
+    // 读取所有文件
+    batchEditData.files = [];
+    let loadedCount = 0;
+    
+    showLoadingMessage('正在读取文件...');
+    
+    files.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            batchEditData.files.push({
+                name: file.name,
+                content: e.target.result,
+                newContent: ''
+            });
+            
+            loadedCount++;
+            showLoadingMessage(`正在读取文件... (${loadedCount}/${files.length})`);
+            
+            if (loadedCount === files.length) {
+                hideLoadingMessage();
+                // 按文件名排序
+                batchEditData.files.sort((a, b) => a.name.localeCompare(b.name));
+                updateBatchEditPreview();
+            }
+        };
+        reader.readAsText(file, 'UTF-8');
+    });
+}
+
+// 更新批量编辑预览
+function updateBatchEditPreview() {
+    if (batchEditData.files.length === 0) {
+        document.getElementById('batchEditPreviewSection').style.display = 'none';
+        document.getElementById('batchEditSaveBtn').disabled = true;
+        document.getElementById('batchEditDownloadBtn').disabled = true;
+        return;
+    }
+    
+    // 获取配置
+    batchEditData.addText = document.getElementById('batchEditText').value;
+    batchEditData.position = document.querySelector('input[name="batchEditPosition"]:checked').value;
+    batchEditData.separator = document.getElementById('batchEditSeparator').value.replace('\\n', '\n');
+    
+    // 处理每个文件
+    batchEditData.files.forEach(file => {
+        const originalContent = file.content.trim();
+        
+        if (batchEditData.addText) {
+            if (batchEditData.position === 'prefix') {
+                file.newContent = batchEditData.addText + batchEditData.separator + originalContent;
+            } else {
+                file.newContent = originalContent + batchEditData.separator + batchEditData.addText;
+            }
+        } else {
+            file.newContent = originalContent;
+        }
+    });
+    
+    // 显示预览
+    document.getElementById('batchEditPreviewSection').style.display = 'block';
+    document.getElementById('batchEditSaveBtn').disabled = false;
+    document.getElementById('batchEditDownloadBtn').disabled = false;
+    
+    // 更新统计
+    document.getElementById('batchEditFileCount').textContent = batchEditData.files.length;
+    const addedChars = batchEditData.addText.length + batchEditData.separator.length;
+    document.getElementById('batchEditAddedChars').textContent = addedChars;
+    
+    // 生成预览列表
+    const previewList = document.getElementById('batchEditPreviewList');
+    let html = '';
+    
+    batchEditData.files.forEach((file, index) => {
+        const preview = file.newContent.length > 60 ? file.newContent.substring(0, 60) + '...' : file.newContent;
+        const originalPreview = file.content.length > 50 ? file.content.substring(0, 50) + '...' : file.content;
+        
+        html += `
+            <div class="lora-preview-item" title="${file.newContent}">
+                <i class="fas fa-check-circle"></i>
+                <div style="flex: 1;">
+                    <div style="font-weight: 500;">${file.name}</div>
+                    <div style="font-size: 11px; color: #999; margin-top: 2px;">原文: ${originalPreview}</div>
+                    <div style="font-size: 12px; color: #28a745; margin-top: 4px;">新文: ${preview}</div>
+                </div>
+                <span style="font-size: 11px; color: #999; white-space: nowrap;">${file.newContent.length} 字符</span>
+            </div>
+        `;
+    });
+    
+    previewList.innerHTML = html;
+    previewList.scrollTop = 0;
+}
+
+// 保存批量编辑的文件到文件夹
+async function saveBatchEditFiles() {
+    if (batchEditData.files.length === 0) {
+        alert('⚠️ 没有可保存的文件！');
+        return;
+    }
+    
+    if (!('showDirectoryPicker' in window)) {
+        alert('⚠️ 您的浏览器不支持此功能！\n\n请使用最新版本的 Chrome、Edge 或其他基于 Chromium 的浏览器。\n\n或者使用"下载ZIP压缩包"功能。');
+        return;
+    }
+    
+    try {
+        const dirHandle = await window.showDirectoryPicker({
+            mode: 'readwrite',
+            startIn: 'downloads'
+        });
+        
+        showLoadingMessage('正在保存文件...');
+        
+        let successCount = 0;
+        let errorCount = 0;
+        
+        for (let i = 0; i < batchEditData.files.length; i++) {
+            try {
+                const file = batchEditData.files[i];
+                const fileHandle = await dirHandle.getFileHandle(file.name, { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(file.newContent);
+                await writable.close();
+                
+                successCount++;
+                showLoadingMessage(`正在保存文件... (${successCount}/${batchEditData.files.length})`);
+                
+            } catch (error) {
+                console.error(`保存文件 ${i} 失败:`, error);
+                errorCount++;
+            }
+        }
+        
+        hideLoadingMessage();
+        
+        if (errorCount === 0) {
+            showSuccessMessage(`✅ 成功保存 ${successCount} 个文件到选定文件夹！`);
+        } else {
+            showErrorMessage(`⚠️ 保存完成：${successCount} 个成功，${errorCount} 个失败`);
+        }
+        
+    } catch (error) {
+        hideLoadingMessage();
+        
+        if (error.name === 'AbortError') {
+            console.log('用户取消了文件夹选择');
+        } else {
+            console.error('保存文件失败:', error);
+            showErrorMessage('保存失败：' + error.message);
+        }
+    }
+}
+
+// 下载批量编辑的文件（ZIP）
+async function downloadBatchEditFiles() {
+    if (batchEditData.files.length === 0) {
+        alert('⚠️ 没有可下载的文件！');
+        return;
+    }
+    
+    try {
+        const zip = new JSZip();
+        
+        batchEditData.files.forEach(file => {
+            zip.file(file.name, file.newContent);
+        });
+        
+        showLoadingMessage('正在打包文件...');
+        const blob = await zip.generateAsync({ type: 'blob' });
+        
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `batch_edited_${Date.now()}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        hideLoadingMessage();
+        showSuccessMessage(`✅ 成功导出 ${batchEditData.files.length} 个文件！`);
         
     } catch (error) {
         console.error('导出失败:', error);
