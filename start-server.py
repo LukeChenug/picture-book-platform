@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 简单的HTTP服务器，用于解决CORS问题
 运行此脚本后，在浏览器中访问 http://localhost:8000
@@ -7,8 +8,14 @@
 import http.server
 import socketserver
 import os
+import sys
 import webbrowser
 from urllib.parse import unquote
+
+# 设置输出编码为UTF-8，解决Windows下emoji显示问题
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):

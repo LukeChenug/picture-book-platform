@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>绘本世界 - 创作与阅读平台</title>
-    <meta name="version" content="v1.1.1">
+    <meta name="version" content="v1.2.0">
     <meta name="release-date" content="2025-10-27">
     <meta name="description" content="功能强大的Web绘本生成和阅读平台，支持在线生成交互式绘本和预置绘本阅读">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1643,6 +1643,234 @@
             font-size: 20px;
         }
 
+        /* =============== LORA标注工具样式 =============== */
+        .lora-tool-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .lora-tool-section h4 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lora-input-group {
+            margin-bottom: 15px;
+        }
+
+        .lora-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .lora-input-group input[type="text"],
+        .lora-input-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .lora-input-group input:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        .lora-radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lora-radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lora-radio-option:hover {
+            border-color: #f5576c;
+            background: #fff5f7;
+        }
+
+        .lora-radio-option input[type="radio"] {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .lora-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+        }
+
+        .lora-checkbox-group input[type="checkbox"] {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .lora-preview-box {
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .lora-preview-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lora-preview-box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .lora-preview-box::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .lora-preview-box::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .lora-preview-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .lora-preview-item i {
+            color: #28a745;
+        }
+
+        .lora-file-upload {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lora-file-upload:hover {
+            border-color: #f5576c;
+            background: #fff5f7;
+        }
+
+        .lora-file-upload input[type="file"] {
+            display: none;
+        }
+
+        .lora-file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #e7f5e9;
+            border: 1px solid #28a745;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .lora-file-info i {
+            color: #28a745;
+            font-size: 20px;
+        }
+
+        .lora-stats {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .lora-stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .lora-stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .lora-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .lora-btn-primary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .lora-btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .lora-btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .lora-btn-secondary:hover {
+            transform: translateY(-2px);
+            background: #5a6268;
+        }
+
         #addOptionBtn {
             width: 100%;
             padding: 10px;
@@ -1709,6 +1937,10 @@
                     <button class="nav-btn" data-tab="import">
                         <i class="fas fa-file-import"></i>
                         导入绘本
+                    </button>
+                    <button class="nav-btn" onclick="openLoraAnnotationTool()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-tags"></i>
+                        LORA标注工具
                     </button>
                 </nav>
             </div>
@@ -6008,6 +6240,486 @@ function handleOptionClick(option, optionIndex) {
             
             // 刷新绘本库显示
             AppState.renderBooksGrid();
+}
+
+// =============== LORA标注工具 ================
+let loraToolData = {
+    uploadedFile: null,
+    segments: [],
+    config: {
+        separatorType: 'emptyLine',
+        customSeparator: '---',
+        prefix: 'cameralora_hojo',
+        nameSeparator: ' ',
+        startNumber: 1,
+        padZero: false,
+        digits: 3
+    }
+};
+
+// 打开LORA标注工具
+function openLoraAnnotationTool() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'loraToolModal';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3><i class="fas fa-tags"></i> LORA标注工具</h3>
+                <button onclick="closeLoraToolModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- 文件上传区域 -->
+                <div class="lora-tool-section">
+                    <h4><i class="fas fa-upload"></i> 上传标注文件</h4>
+                    <label class="lora-file-upload" for="loraFileInput">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #6c757d; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; color: #6c757d;">点击选择TXT文件或拖拽文件到此处</p>
+                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #999;">支持UTF-8和GBK编码</p>
+                        <input type="file" id="loraFileInput" accept=".txt" onchange="handleLoraFileUpload(event)">
+                    </label>
+                    <div id="loraFileInfo" style="display: none;"></div>
+                </div>
+
+                <!-- 分隔符设置 -->
+                <div class="lora-tool-section">
+                    <h4><i class="fas fa-scissors"></i> 分隔符设置</h4>
+                    <div class="lora-radio-group">
+                        <label class="lora-radio-option">
+                            <input type="radio" name="separatorType" value="emptyLine" checked onchange="updateSeparatorType('emptyLine')">
+                            <span><strong>空行</strong>（连续换行符）- 推荐</span>
+                        </label>
+                        <label class="lora-radio-option">
+                            <input type="radio" name="separatorType" value="custom" onchange="updateSeparatorType('custom')">
+                            <span><strong>自定义分隔符</strong></span>
+                        </label>
+                        <div class="lora-input-group" id="customSeparatorInput" style="display: none; margin-top: 10px;">
+                            <input type="text" id="customSeparatorValue" placeholder="输入自定义分隔符，如: ---, ===, ###" value="---" oninput="updateCustomSeparator()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文件命名设置 -->
+                <div class="lora-tool-section">
+                    <h4><i class="fas fa-signature"></i> 文件命名设置</h4>
+                    <div class="lora-input-group">
+                        <label>文件前缀</label>
+                        <input type="text" id="loraPrefix" value="cameralora_hojo" placeholder="如: cameralora_hojo" oninput="updateNamingConfig()">
+                    </div>
+                    <div class="lora-input-group">
+                        <label>前缀后分隔符</label>
+                        <input type="text" id="loraNameSeparator" value=" " placeholder="空格、下划线(_)等" oninput="updateNamingConfig()" style="width: 150px;">
+                        <small style="color: #999; display: block; margin-top: 5px;">常用: 空格、下划线(_)、连字符(-)</small>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="lora-input-group" style="flex: 1;">
+                            <label>起始编号</label>
+                            <input type="number" id="loraStartNumber" value="1" min="1" oninput="updateNamingConfig()">
+                        </div>
+                        <div class="lora-input-group" style="flex: 1;">
+                            <label class="lora-checkbox-group">
+                                <input type="checkbox" id="loraPadZero" onchange="updatePadZeroConfig()">
+                                <span>补零对齐</span>
+                            </label>
+                            <input type="number" id="loraDigits" value="3" min="1" max="10" disabled oninput="updateNamingConfig()" style="margin-top: 8px;">
+                            <small style="color: #999; display: block; margin-top: 5px;">如: 001, 002, 003...</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预览结果 -->
+                <div class="lora-tool-section" id="loraPreviewSection" style="display: none;">
+                    <h4><i class="fas fa-eye"></i> 预览结果</h4>
+                    <div style="padding: 12px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; margin-bottom: 15px; font-size: 13px; color: #856404;">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>保存方式说明：</strong><br>
+                        • <strong>选择文件夹并保存</strong>：直接保存多个txt文件到指定文件夹（推荐，需Chrome/Edge浏览器）<br>
+                        • <strong>下载ZIP压缩包</strong>：下载一个压缩包，手动解压后使用（兼容所有浏览器）
+                    </div>
+                    <div class="lora-stats">
+                        <div class="lora-stat-item">
+                            <span class="lora-stat-number" id="loraFileCount">0</span>
+                            <span class="lora-stat-label">文件数量</span>
+                        </div>
+                        <div class="lora-stat-item">
+                            <span class="lora-stat-number" id="loraTotalChars">0</span>
+                            <span class="lora-stat-label">总字符数</span>
+                        </div>
+                    </div>
+                    <div class="lora-preview-box" id="loraPreviewList">
+                        <!-- 预览列表将在这里生成 -->
+                    </div>
+                    <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #999;">
+                        <i class="fas fa-arrow-up"></i> 滚动查看所有文件
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="lora-btn-primary" id="loraSaveToFolderBtn" onclick="saveLoraFilesToFolder()" disabled style="flex: 1;">
+                    <i class="fas fa-folder-open"></i> 选择文件夹并保存
+                </button>
+                <button class="lora-btn-primary" id="loraDownloadBtn" onclick="downloadLoraFiles()" disabled style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="fas fa-download"></i> 下载ZIP压缩包
+                </button>
+                <button class="lora-btn-secondary" onclick="closeLoraToolModal()">
+                    <i class="fas fa-times"></i> 关闭
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // 初始化配置
+    loraToolData.config = {
+        separatorType: 'emptyLine',
+        customSeparator: '---',
+        prefix: 'cameralora_hojo',
+        nameSeparator: ' ',
+        startNumber: 1,
+        padZero: false,
+        digits: 3
+    };
+}
+
+// 关闭LORA工具模态框
+function closeLoraToolModal() {
+    const modal = document.getElementById('loraToolModal');
+    if (modal) {
+        document.body.removeChild(modal);
+    }
+    // 重置数据
+    loraToolData = {
+        uploadedFile: null,
+        segments: [],
+        config: {
+            separatorType: 'emptyLine',
+            customSeparator: '---',
+            prefix: 'cameralora_hojo',
+            nameSeparator: ' ',
+            startNumber: 1,
+            padZero: false,
+            digits: 3
+        }
+    };
+}
+
+// 处理文件上传
+function handleLoraFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // 验证文件类型
+    if (!file.name.toLowerCase().endsWith('.txt')) {
+        alert('⚠️ 请上传TXT文件！');
+        event.target.value = '';
+        return;
+    }
+    
+    // 验证文件大小（限制10MB）
+    if (file.size > 10 * 1024 * 1024) {
+        alert('⚠️ 文件过大！请上传小于10MB的文件。');
+        event.target.value = '';
+        return;
+    }
+    
+    loraToolData.uploadedFile = file;
+    
+    // 显示文件信息
+    const fileInfo = document.getElementById('loraFileInfo');
+    fileInfo.style.display = 'block';
+    fileInfo.innerHTML = `
+        <div class="lora-file-info">
+            <i class="fas fa-file-alt"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: bold;">${file.name}</div>
+                <div style="font-size: 12px; color: #666;">${formatFileSize(file.size)}</div>
+            </div>
+            <i class="fas fa-check-circle"></i>
+        </div>
+    `;
+    
+    // 读取并解析文件
+    parseLoraFile(file);
+}
+
+// 格式化文件大小
+function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+// 解析文件
+function parseLoraFile(file) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        let content = e.target.result;
+        
+        // 处理文本内容
+        processLoraContent(content);
+    };
+    
+    // 先尝试UTF-8编码
+    reader.readAsText(file, 'UTF-8');
+}
+
+// 处理文本内容
+function processLoraContent(content) {
+    const config = loraToolData.config;
+    let segments = [];
+    
+    // 根据分隔符类型拆分
+    if (config.separatorType === 'emptyLine') {
+        // 按空行分割
+        segments = content.split(/\n\s*\n/);
+    } else {
+        // 按自定义分隔符分割
+        const separator = config.customSeparator;
+        segments = content.split(separator);
+    }
+    
+    // 处理每段内容
+    segments = segments.map(segment => {
+        return segment
+            .trim()                      // 删除首尾空格空行
+            .replace(/\n+/g, ' ')        // 换行符替换为空格
+            .replace(/\s+/g, ' ')        // 多个空格合并为一个
+            .trim();                     // 再次trim确保干净
+    }).filter(s => s.length > 0);        // 过滤空内容
+    
+    loraToolData.segments = segments;
+    
+    // 更新预览
+    updateLoraPreview();
+}
+
+// 更新预览
+function updateLoraPreview() {
+    const segments = loraToolData.segments;
+    
+    if (segments.length === 0) {
+        document.getElementById('loraPreviewSection').style.display = 'none';
+        document.getElementById('loraDownloadBtn').disabled = true;
+        document.getElementById('loraSaveToFolderBtn').disabled = true;
+        return;
+    }
+    
+    // 显示预览区域
+    document.getElementById('loraPreviewSection').style.display = 'block';
+    document.getElementById('loraDownloadBtn').disabled = false;
+    document.getElementById('loraSaveToFolderBtn').disabled = false;
+    
+    // 更新统计信息
+    const totalChars = segments.reduce((sum, seg) => sum + seg.length, 0);
+    document.getElementById('loraFileCount').textContent = segments.length;
+    document.getElementById('loraTotalChars').textContent = totalChars.toLocaleString();
+    
+    // 生成文件名预览 - 显示所有文件
+    const config = loraToolData.config;
+    const previewList = document.getElementById('loraPreviewList');
+    let html = '';
+    
+    // 显示所有文件
+    for (let i = 0; i < segments.length; i++) {
+        const fileName = generateLoraFileName(i);
+        const preview = segments[i].length > 50 ? segments[i].substring(0, 50) + '...' : segments[i];
+        html += `
+            <div class="lora-preview-item" title="${segments[i]}">
+                <i class="fas fa-check-circle"></i>
+                <div style="flex: 1;">
+                    <div style="font-weight: 500;">${fileName}</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">${preview}</div>
+                </div>
+                <span style="font-size: 11px; color: #999; white-space: nowrap;">${segments[i].length} 字符</span>
+            </div>
+        `;
+    }
+    
+    previewList.innerHTML = html;
+    
+    // 滚动到顶部
+    previewList.scrollTop = 0;
+}
+
+// 生成文件名
+function generateLoraFileName(index) {
+    const config = loraToolData.config;
+    const number = config.startNumber + index;
+    
+    let numberStr = number.toString();
+    if (config.padZero) {
+        numberStr = numberStr.padStart(config.digits, '0');
+    }
+    
+    return `${config.prefix}${config.nameSeparator}${numberStr}.txt`;
+}
+
+// 更新分隔符类型
+function updateSeparatorType(type) {
+    loraToolData.config.separatorType = type;
+    
+    // 显示/隐藏自定义分隔符输入框
+    const customInput = document.getElementById('customSeparatorInput');
+    if (type === 'custom') {
+        customInput.style.display = 'block';
+    } else {
+        customInput.style.display = 'none';
+    }
+    
+    // 重新解析
+    if (loraToolData.uploadedFile) {
+        parseLoraFile(loraToolData.uploadedFile);
+    }
+}
+
+// 更新自定义分隔符
+function updateCustomSeparator() {
+    const value = document.getElementById('customSeparatorValue').value;
+    loraToolData.config.customSeparator = value;
+    
+    // 重新解析
+    if (loraToolData.uploadedFile) {
+        parseLoraFile(loraToolData.uploadedFile);
+    }
+}
+
+// 更新命名配置
+function updateNamingConfig() {
+    loraToolData.config.prefix = document.getElementById('loraPrefix').value;
+    loraToolData.config.nameSeparator = document.getElementById('loraNameSeparator').value;
+    loraToolData.config.startNumber = parseInt(document.getElementById('loraStartNumber').value) || 1;
+    loraToolData.config.digits = parseInt(document.getElementById('loraDigits').value) || 3;
+    
+    // 更新预览
+    updateLoraPreview();
+}
+
+// 更新补零配置
+function updatePadZeroConfig() {
+    const checked = document.getElementById('loraPadZero').checked;
+    loraToolData.config.padZero = checked;
+    document.getElementById('loraDigits').disabled = !checked;
+    
+    // 更新预览
+    updateLoraPreview();
+}
+
+// 保存文件到自选文件夹
+async function saveLoraFilesToFolder() {
+    const segments = loraToolData.segments;
+    
+    if (segments.length === 0) {
+        alert('⚠️ 没有可保存的内容！');
+        return;
+    }
+    
+    // 检查浏览器是否支持 File System Access API
+    if (!('showDirectoryPicker' in window)) {
+        alert('⚠️ 您的浏览器不支持此功能！\n\n请使用最新版本的 Chrome、Edge 或其他基于 Chromium 的浏览器。\n\n或者使用"下载ZIP压缩包"功能。');
+        return;
+    }
+    
+    try {
+        // 让用户选择文件夹
+        const dirHandle = await window.showDirectoryPicker({
+            mode: 'readwrite',
+            startIn: 'downloads'
+        });
+        
+        showLoadingMessage('正在保存文件...');
+        
+        let successCount = 0;
+        let errorCount = 0;
+        
+        // 逐个保存文件
+        for (let i = 0; i < segments.length; i++) {
+            try {
+                const fileName = generateLoraFileName(i);
+                const content = segments[i];
+                
+                // 创建文件
+                const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
+                
+                // 写入内容
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+                
+                successCount++;
+                
+                // 更新进度
+                showLoadingMessage(`正在保存文件... (${successCount}/${segments.length})`);
+                
+            } catch (error) {
+                console.error(`保存文件 ${i} 失败:`, error);
+                errorCount++;
+            }
+        }
+        
+        hideLoadingMessage();
+        
+        if (errorCount === 0) {
+            showSuccessMessage(`✅ 成功保存 ${successCount} 个文件到选定文件夹！`);
+        } else {
+            showErrorMessage(`⚠️ 保存完成：${successCount} 个成功，${errorCount} 个失败`);
+        }
+        
+    } catch (error) {
+        hideLoadingMessage();
+        
+        if (error.name === 'AbortError') {
+            // 用户取消选择
+            console.log('用户取消了文件夹选择');
+        } else {
+            console.error('保存文件失败:', error);
+            showErrorMessage('保存失败：' + error.message);
+        }
+    }
+}
+
+// 下载文件（ZIP压缩包）
+async function downloadLoraFiles() {
+    const segments = loraToolData.segments;
+    
+    if (segments.length === 0) {
+        alert('⚠️ 没有可下载的内容！');
+        return;
+    }
+    
+    try {
+        // 创建ZIP文件
+        const zip = new JSZip();
+        
+        // 添加每个文件
+        segments.forEach((content, index) => {
+            const fileName = generateLoraFileName(index);
+            zip.file(fileName, content);
+        });
+        
+        // 生成ZIP
+        showLoadingMessage('正在打包文件...');
+        const blob = await zip.generateAsync({ type: 'blob' });
+        
+        // 下载
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `lora_annotations_${Date.now()}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        hideLoadingMessage();
+        showSuccessMessage(`✅ 成功导出 ${segments.length} 个文件！`);
+        
+    } catch (error) {
+        console.error('导出失败:', error);
+        hideLoadingMessage();
+        showErrorMessage('导出失败：' + error.message);
+    }
 }
 
 // =============== 应用启动 ================
