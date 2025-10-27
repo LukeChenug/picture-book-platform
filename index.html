@@ -1871,6 +1871,121 @@
             background: #5a6268;
         }
 
+        /* LORA工具Tab按钮样式 */
+        .lora-mode-tab {
+            background: #e0e0e0;
+            color: #666;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .lora-mode-tab:hover {
+            background: #d0d0d0;
+        }
+
+        .lora-mode-tab.active {
+            background: #333;
+            color: white;
+        }
+
+        /* 固定高度的模态框布局 */
+        .lora-modal-fixed {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            max-height: 80vh;
+        }
+
+        .lora-modal-body-scroll {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .lora-modal-body-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lora-modal-body-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .lora-modal-body-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .lora-modal-body-scroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .lora-modal-footer-fixed {
+            padding: 15px 20px;
+            border-top: 1px solid #ddd;
+            background: white;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* 一级按钮：黑色 */
+        .lora-btn-primary-black {
+            background: #333;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lora-btn-primary-black:hover:not(:disabled) {
+            background: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .lora-btn-primary-black:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* 二级按钮：深灰色 */
+        .lora-btn-secondary-gray {
+            background: #6c757d;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lora-btn-secondary-gray:hover:not(:disabled) {
+            background: #5a6268;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .lora-btn-secondary-gray:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         #addOptionBtn {
             width: 100%;
             padding: 10px;
@@ -6250,10 +6365,7 @@ let loraToolData = {
         separatorType: 'emptyLine',
         customSeparator: '---',
         prefix: 'cameralora_hojo',
-        nameSeparator: ' ',
-        startNumber: 1,
-        padZero: false,
-        digits: 3
+        startNumber: 1
     }
 };
 
@@ -6273,20 +6385,20 @@ function openLoraAnnotationTool() {
     modal.className = 'modal';
     modal.id = 'loraToolModal';
     modal.innerHTML = `
-        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-content lora-modal-fixed" style="max-width: 900px;">
             <div class="modal-header">
                 <h3><i class="fas fa-tags"></i> LORA标注工具</h3>
                 <button onclick="closeLoraToolModal()">×</button>
             </div>
-            <div class="modal-body">
+            <div class="lora-modal-body-scroll">
                 <!-- 功能选择 -->
                 <div class="lora-tool-section" style="margin-bottom: 25px;">
                     <h4><i class="fas fa-magic"></i> 选择功能</h4>
                     <div style="display: flex; gap: 15px;">
-                        <button class="lora-btn-primary" id="splitModeBtn" onclick="switchLoraMode('split')" style="flex: 1;">
+                        <button class="lora-mode-tab active" id="splitModeBtn" onclick="switchLoraMode('split')">
                             <i class="fas fa-cut"></i> 文本拆分
                         </button>
-                        <button class="lora-btn-secondary" id="batchEditModeBtn" onclick="switchLoraMode('batchEdit')" style="flex: 1; background: #28a745;">
+                        <button class="lora-mode-tab" id="batchEditModeBtn" onclick="switchLoraMode('batchEdit')">
                             <i class="fas fa-edit"></i> 批量编辑
                         </button>
                     </div>
@@ -6327,28 +6439,19 @@ function openLoraAnnotationTool() {
                 <!-- 文件命名设置 -->
                 <div class="lora-tool-section">
                     <h4><i class="fas fa-signature"></i> 文件命名设置</h4>
-                    <div class="lora-input-group">
-                        <label>文件前缀</label>
-                        <input type="text" id="loraPrefix" value="cameralora_hojo" placeholder="如: cameralora_hojo" oninput="updateNamingConfig()">
-                    </div>
-                    <div class="lora-input-group">
-                        <label>前缀后分隔符</label>
-                        <input type="text" id="loraNameSeparator" value=" " placeholder="空格、下划线(_)等" oninput="updateNamingConfig()" style="width: 150px;">
-                        <small style="color: #999; display: block; margin-top: 5px;">常用: 空格、下划线(_)、连字符(-)</small>
-                    </div>
                     <div style="display: flex; gap: 15px;">
+                        <div class="lora-input-group" style="flex: 1;">
+                            <label>文件前缀</label>
+                            <input type="text" id="loraPrefix" value="cameralora_hojo" placeholder="如: cameralora_hojo" oninput="updateNamingConfig()">
+                        </div>
                         <div class="lora-input-group" style="flex: 1;">
                             <label>起始编号</label>
                             <input type="number" id="loraStartNumber" value="1" min="1" oninput="updateNamingConfig()">
                         </div>
-                        <div class="lora-input-group" style="flex: 1;">
-                            <label class="lora-checkbox-group">
-                                <input type="checkbox" id="loraPadZero" onchange="updatePadZeroConfig()">
-                                <span>补零对齐</span>
-                            </label>
-                            <input type="number" id="loraDigits" value="3" min="1" max="10" disabled oninput="updateNamingConfig()" style="margin-top: 8px;">
-                            <small style="color: #999; display: block; margin-top: 5px;">如: 001, 002, 003...</small>
-                        </div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 13px; color: #666;">
+                        <span style="color: #666;">预览示例：</span>
+                        <code id="namingPreview" style="background: #f8f9fa; padding: 4px 8px; border-radius: 3px; color: #666; font-size: 13px;">cameralora_hojo 1.txt</code>
                     </div>
                 </div>
 
@@ -6453,15 +6556,12 @@ function openLoraAnnotationTool() {
                 </div>
 
             </div>
-            <div class="modal-footer">
-                <button class="lora-btn-primary" id="loraSaveToFolderBtn" onclick="saveLoraFilesToFolder()" disabled style="flex: 1;">
+            <div class="lora-modal-footer-fixed">
+                <button class="lora-btn-primary-black" id="loraSaveToFolderBtn" onclick="saveLoraFilesToFolder()" disabled style="flex: 1;">
                     <i class="fas fa-folder-open"></i> 选择文件夹并保存
                 </button>
-                <button class="lora-btn-primary" id="loraDownloadBtn" onclick="downloadLoraFiles()" disabled style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <button class="lora-btn-secondary-gray" id="loraDownloadBtn" onclick="downloadLoraFiles()" disabled style="flex: 1;">
                     <i class="fas fa-download"></i> 下载ZIP压缩包
-                </button>
-                <button class="lora-btn-secondary" onclick="closeLoraToolModal()">
-                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div>
@@ -6474,10 +6574,7 @@ function openLoraAnnotationTool() {
         separatorType: 'emptyLine',
         customSeparator: '---',
         prefix: 'cameralora_hojo',
-        nameSeparator: ' ',
-        startNumber: 1,
-        padZero: false,
-        digits: 3
+        startNumber: 1
     };
 }
 
@@ -6495,10 +6592,7 @@ function closeLoraToolModal() {
             separatorType: 'emptyLine',
             customSeparator: '---',
             prefix: 'cameralora_hojo',
-            nameSeparator: ' ',
-            startNumber: 1,
-            padZero: false,
-            digits: 3
+            startNumber: 1
         }
     };
 }
@@ -6647,12 +6741,7 @@ function generateLoraFileName(index) {
     const config = loraToolData.config;
     const number = config.startNumber + index;
     
-    let numberStr = number.toString();
-    if (config.padZero) {
-        numberStr = numberStr.padStart(config.digits, '0');
-    }
-    
-    return `${config.prefix}${config.nameSeparator}${numberStr}.txt`;
+    return `${config.prefix} ${number}.txt`;
 }
 
 // 更新分隔符类型
@@ -6687,21 +6776,15 @@ function updateCustomSeparator() {
 // 更新命名配置
 function updateNamingConfig() {
     loraToolData.config.prefix = document.getElementById('loraPrefix').value;
-    loraToolData.config.nameSeparator = document.getElementById('loraNameSeparator').value;
     loraToolData.config.startNumber = parseInt(document.getElementById('loraStartNumber').value) || 1;
-    loraToolData.config.digits = parseInt(document.getElementById('loraDigits').value) || 3;
     
-    // 更新预览
-    updateLoraPreview();
-}
-
-// 更新补零配置
-function updatePadZeroConfig() {
-    const checked = document.getElementById('loraPadZero').checked;
-    loraToolData.config.padZero = checked;
-    document.getElementById('loraDigits').disabled = !checked;
+    // 更新预览示例
+    const preview = document.getElementById('namingPreview');
+    if (preview) {
+        preview.textContent = `${loraToolData.config.prefix} ${loraToolData.config.startNumber}.txt`;
+    }
     
-    // 更新预览
+    // 更新文件预览
     updateLoraPreview();
 }
 
@@ -6832,9 +6915,8 @@ function switchLoraMode(mode) {
     const batchEditBtn = document.getElementById('batchEditModeBtn');
     
     if (mode === 'split') {
-        splitBtn.className = 'lora-btn-primary';
-        batchEditBtn.className = 'lora-btn-secondary';
-        batchEditBtn.style.background = '#28a745';
+        splitBtn.className = 'lora-mode-tab active';
+        batchEditBtn.className = 'lora-mode-tab';
         document.getElementById('splitModeContent').style.display = 'block';
         document.getElementById('batchEditModeContent').style.display = 'none';
         
@@ -6848,9 +6930,8 @@ function switchLoraMode(mode) {
             document.getElementById('batchEditDownloadBtn').style.display = 'none';
         }
     } else {
-        splitBtn.className = 'lora-btn-secondary';
-        batchEditBtn.className = 'lora-btn-primary';
-        batchEditBtn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+        splitBtn.className = 'lora-mode-tab';
+        batchEditBtn.className = 'lora-mode-tab active';
         document.getElementById('splitModeContent').style.display = 'none';
         document.getElementById('batchEditModeContent').style.display = 'block';
         
@@ -6859,11 +6940,11 @@ function switchLoraMode(mode) {
         document.getElementById('loraDownloadBtn').style.display = 'none';
         
         // 添加批量编辑按钮（如果还没有）
-        const footer = document.querySelector('#loraToolModal .modal-footer');
+        const footer = document.querySelector('#loraToolModal .lora-modal-footer-fixed');
         if (!document.getElementById('batchEditSaveBtn')) {
             const saveBtn = document.createElement('button');
             saveBtn.id = 'batchEditSaveBtn';
-            saveBtn.className = 'lora-btn-primary';
+            saveBtn.className = 'lora-btn-primary-black';
             saveBtn.style.flex = '1';
             saveBtn.disabled = true;
             saveBtn.onclick = saveBatchEditFiles;
@@ -6873,9 +6954,8 @@ function switchLoraMode(mode) {
         if (!document.getElementById('batchEditDownloadBtn')) {
             const downloadBtn = document.createElement('button');
             downloadBtn.id = 'batchEditDownloadBtn';
-            downloadBtn.className = 'lora-btn-primary';
+            downloadBtn.className = 'lora-btn-secondary-gray';
             downloadBtn.style.flex = '1';
-            downloadBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
             downloadBtn.disabled = true;
             downloadBtn.onclick = downloadBatchEditFiles;
             downloadBtn.innerHTML = '<i class="fas fa-download"></i> 下载ZIP压缩包';
