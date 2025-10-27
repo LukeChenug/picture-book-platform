@@ -10,7 +10,7 @@
 
 ## 🌐 在线访问
 
-**GitHub Pages**: [https://YOUR_USERNAME.github.io/picture-book-platform](https://YOUR_USERNAME.github.io/picture-book-platform)
+**GitHub Pages**: [https://YOUR_USERNAME.github.io/picture-book-platform](https://lukechenug.github.io/picture-book-platform/)  
 
 > 请将 `YOUR_USERNAME` 替换为您的GitHub用户名
 
