@@ -2,6 +2,12 @@
 
 一个功能强大的Web绘本生成和阅读平台，支持在线生成交互式绘本和预置绘本阅读。
 
+## 📋 系统要求
+
+- **Python**: 3.6+ (用于本地开发服务器)
+- **浏览器**: Chrome, Firefox, Safari, Edge (最新版本)
+- **Git**: 2.0+ (用于版本控制和部署)
+
 ## 🌐 在线访问
 
 **GitHub Pages**: [https://YOUR_USERNAME.github.io/picture-book-platform](https://YOUR_USERNAME.github.io/picture-book-platform)
@@ -26,23 +32,34 @@
 
 ```
 picture-book-platform/
-├── index.html              # 主应用文件
-├── huibenyuedu.html        # 绘本阅读器
+├── index.html              # 主应用文件（包含创作和阅读功能）
 ├── books/                  # 预置绘本目录
-│   ├── beach-morning/      # 示例绘本1
-│   │   ├── book-data.json  # 绘本数据
-│   │   ├── images/         # 图片文件
-│   │   └── audio/          # 音频文件
-│   └── forest-adventure/   # 示例绘本2
-│       ├── book-data.json
-│       ├── images/
-│       └── audio/
-├── AaErZhiYuan-2.ttf      # 字体文件
-├── deploy.sh              # 部署脚本
-└── README.md              # 说明文档
+│   └── 奇奇的蔬菜王国/     # 示例绘本
+│       ├── book-data.json  # 绘本数据配置
+│       ├── images/         # 图片文件（16页+封面）
+│       └── audio/          # 音频文件（16个）
+├── AaErZhiYuan-2.ttf      # 自定义字体文件
+├── start-server.py        # 本地开发服务器
+├── deploy.sh              # 基础部署脚本
+├── deploy-to-github.sh    # GitHub部署脚本
+├── .gitignore             # Git忽略配置
+└── README.md              # 项目说明文档
 ```
 
 ## 🛠️ 使用方法
+
+### 0. 本地运行项目
+```bash
+# 使用Python启动本地服务器（推荐）
+python start-server.py
+
+# 或者使用Python内置服务器
+python -m http.server 8000
+```
+
+然后在浏览器访问：`http://localhost:8000`
+
+> **注意**: 由于浏览器的CORS安全策略，必须通过HTTP服务器访问，不能直接打开HTML文件
 
 ### 1. 创建绘本
 1. 上传背景图片（按序号命名：01.jpg, 02.jpg...）
@@ -69,14 +86,15 @@ picture-book-platform/
 
 ## 🌐 部署到GitHub Pages
 
-### 步骤1：创建GitHub仓库
+### 步骤1：连接到GitHub远程仓库
 ```bash
-git init
-git add .
-git commit -m "Initial commit: Picture Book Platform"
+# 在GitHub上创建新仓库后，执行以下命令
 git remote add origin https://github.com/你的用户名/仓库名.git
+git branch -M main  # 可选：将master分支重命名为main
 git push -u origin main
 ```
+
+> **提示**: 项目已初始化Git仓库，可以直接添加远程仓库并推送
 
 ### 步骤2：启用GitHub Pages
 1. 进入仓库设置页面
@@ -114,8 +132,14 @@ git push -u origin main
 
 ## 📝 更新日志
 
+### v1.1.1 (2025-10-27)
+- ✅ 初始化Git版本控制
+- ✅ 更新README文档，修正文件结构说明
+- ✅ 添加系统要求和本地运行说明
+- ✅ 优化部署指南
+
 ### v1.1.0 (2025-09-19)
-- ✅ 新增"奇奇的蔬菜王国"绘本
+- ✅ 新增"奇奇的蔬菜王国"绘本（16页）
 - ✅ 改进绘本数据结构
 - ✅ 优化音频播放体验
 - ✅ 增强交互式页面功能
@@ -128,6 +152,27 @@ git push -u origin main
 - ✅ 3D翻页效果
 - ✅ 预置绘本导出
 - ✅ GitHub Pages部署支持
+
+## ❓ 常见问题
+
+### Q: 为什么不能直接打开index.html？
+A: 由于浏览器的CORS安全策略，加载本地文件（音频、图片）需要通过HTTP服务器。请使用`python start-server.py`启动本地服务器。
+
+### Q: 如何添加新的预置绘本？
+A: 
+1. 在应用中创建绘本
+2. 点击"导出预置"按钮
+3. 将ZIP文件解压到`books/`目录
+4. 在`index.html`中的`PresetBooks`数组中添加配置
+
+### Q: 支持哪些文件格式？
+A: 
+- 图片：JPG, PNG
+- 音频：MP3
+- 字体：TTF
+
+### Q: 部署脚本在Windows上无法运行？
+A: `.sh`脚本需要在Git Bash或WSL中运行。或者手动执行脚本中的Git命令。
 
 ## 🤝 贡献
 
